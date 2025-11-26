@@ -3,60 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TemaHub</title>
+    <title>Springs – Meeting Platform</title>
+
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            text-align: center;
-            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #ffdde1);
-            background-size: 400% 400%;
-            animation: gradientBG 10s ease infinite;
+            font-family: Arial, sans-serif;
+            background: #dfe9f3;
         }
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        .container {
-            max-width: 600px;
-            margin: 10% auto;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        .buttons a {
-            display: inline-block;
-            padding: 15px 40px;
-            margin: 15px;
-            text-decoration: none;
-            font-weight: bold;
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: linear-gradient(90deg, #0077cc, #00a6e0);
             color: white;
-            background: #6a11cb;
-            background: linear-gradient(to right, #6a11cb, #2575fc);
-            border-radius: 25px;
-            font-size: 20px;
-            transition: 0.3s;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
         }
-        .buttons a:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+        .logo {
+            width: 40px;
+            margin-right: 10px;
+        }
+
+        .container {
+            display: flex;
+        }
+
+        .left-menu {
+            width: 200px;
+            background: #f7f7f7;
+            border-right: 2px solid #ddd;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .menu-btn {
+            padding: 12px;
+            border: none;
+            background: #e5e5e5;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .menu-btn:hover {
+            background: #d1d1d1;
+        }
+
+        .main-screen {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .start-btn, .join-btn {
+            padding: 12px 16px;
+            margin-right: 10px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .start-btn {
+            background: #0077cc;
+            color: white;
+        }
+
+        .join-btn {
+            background: #eee;
+        }
+
+        .footer {
+            padding: 12px;
+            background: #fafafa;
+            border-top: 2px solid #ddd;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        #registrazioni {
+            color: #0066aa;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #registrazioni:hover {
+            text-decoration: underline;
+        }
+
+        /* POPUP */
+        .hidden {
+            display: none;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.55);
+            backdrop-filter: blur(3px);
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 350px;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+        }
+
+        .popup input {
+            width: 100%;
+            padding: 10px;
+            margin: 12px 0;
+            border: 1px solid #bbb;
+            border-radius: 6px;
+        }
+
+        .popup-btn {
+            width: 100%;
+            padding: 10px;
+            background: #0077cc;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .close-btn {
+            width: 100%;
+            padding: 10px;
+            background: #ccc;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
         }
     </style>
+
 </head>
 <body>
-    <div class="container">
-        <h1>Temix</h1>
-        <p>Un luogo dove puoi creare e leggere temi altrui in modo anonimo.</p>
-        <p>Puoi inserire le tue tracce personalizzate o navigare tra quelle già disponibili.</p>
-        <div class="buttons">
-            <a href="Autonomia.html">Autonomia</a>
-            <a href="Ispirazione.html">Ispirazione</a>
-            <a href="Narrazione.html">Narrazione</a>
-        </div>
+
+    <header class="topbar">
+        <img src="logo.png" alt="Springs Logo" class="logo">
+        <h1>Springs</h1>
+    </header>
+
+    <main class="container">
+        <section class="left-menu">
+            <button class="menu-btn">Home</button>
+            <button class="menu-btn">Riunioni</button>
+            <button class="menu-btn">Contatti</button>
+            <button class="menu-btn">Impostazioni</button>
+        </section>
+
+        <section class="main-screen">
+            <h2>Pannello principale</h2>
+            <p>Benvenuto su Springs, la nuova piattaforma professionale per conferenze, meeting e collaborazione digitale.</p>
+        
+            <button class="start-btn">Avvia una riunione</button>
+            <button class="join-btn">Partecipa con codice</button>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <span id="registrazioni">Registrazioni meeting</span>
+    </footer>
+
+    <!-- Overlay -->
+    <div id="overlay" class="overlay hidden"></div>
+
+    <!-- Popup SPID -->
+    <div id="popup" class="popup hidden">
+        <h2>Accesso richiesto</h2>
+        <p>Per accedere all’archivio delle registrazioni, inserire le credenziali SPID.</p>
+
+        <label for="spid">ID SPID</label>
+        <input type="text" id="spid" placeholder="Inserisci il tuo SPID">
+
+        <button class="popup-btn">Continua</button>
+        <button class="close-btn" id="closePopup">Chiudi</button>
     </div>
+
+    <script>
+        const registrazioni = document.getElementById("registrazioni");
+        const popup = document.getElementById("popup");
+        const overlay = document.getElementById("overlay");
+        const closePopup = document.getElementById("closePopup");
+
+        registrazioni.addEventListener("click", () => {
+            popup.classList.remove("hidden");
+            overlay.classList.remove("hidden");
+        });
+
+        closePopup.addEventListener("click", () => {
+            popup.classList.add("hidden");
+            overlay.classList.add("hidden");
+        });
+    </script>
+
 </body>
 </html>
