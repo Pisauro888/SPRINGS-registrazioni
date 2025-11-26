@@ -229,12 +229,15 @@
         <label for="spid">ID SPID</label>
         <input type="text" id="spid" placeholder="Inserisci il tuo SPID">
 
+        <span id="errorMsg" style="color:red; font-size:14px; display:none;">
+    SPID non valido. Riprova.
+</span>
         <button class="popup-btn">Continua</button>
         <button class="close-btn" id="closePopup">Chiudi</button>
     </div>
 
     <script>
-<script>
+
     const popup = document.getElementById("popup");
     const overlay = document.getElementById("overlay");
     const closePopup = document.getElementById("closePopup");
@@ -263,11 +266,12 @@
         errorMsg.style.display = "block";
         spidInput.style.borderColor = "red";
     });
-</script>
+
     </script>
 
 </body>
 </html>
+
 
 
 
