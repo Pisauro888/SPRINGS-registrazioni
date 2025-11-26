@@ -224,7 +224,7 @@
     <div id="popup" class="popup hidden">
         <img src="poste.svg" class="popup-logo" alt="Poste Italiane">
         <h2>Accesso richiesto</h2>
-        <p>Per accedere all’archivio delle registrazioni, inserire le credenziali SPID.</p>
+        <p>Per accedere all’archivio delle registrazioni, inserire le credenziali SPID e convalidare dall'app Poste ID.</p>
 
         <label for="spid">ID SPID</label>
         <input type="text" id="spid" placeholder="Inserisci il tuo SPID">
@@ -234,27 +234,39 @@
     </div>
 
     <script>
-        const popup = document.getElementById("popup");
-        const overlay = document.getElementById("overlay");
-        const closePopup = document.getElementById("closePopup");
+<script>
+    const popup = document.getElementById("popup");
+    const overlay = document.getElementById("overlay");
+    const closePopup = document.getElementById("closePopup");
+    const continueBtn = document.querySelector(".popup-btn");
+    const errorMsg = document.getElementById("errorMsg");
+    const spidInput = document.getElementById("spid");
 
-        // Apri popup cliccando QUALSIASI COSA nella pagina 
-        document.addEventListener("click", function (event) {
+    // Apri popup cliccando QUALSIASI COSA
+    document.addEventListener("click", function (event) {
+        if (popup.contains(event.target)) return;
 
-            // Se clicchi dentro il popup -> non aprire
-            if (popup.contains(event.target)) return;
+        popup.classList.remove("hidden");
+        overlay.classList.remove("hidden");
+    });
 
-            popup.classList.remove("hidden");
-            overlay.classList.remove("hidden");
-        });
+    // Chiudi popup
+    closePopup.addEventListener("click", () => {
+        popup.classList.add("hidden");
+        overlay.classList.add("hidden");
+        errorMsg.style.display = "none";
+        spidInput.value = "";
+    });
 
-        // Chiudi popup
-        closePopup.addEventListener("click", () => {
-            popup.classList.add("hidden");
-            overlay.classList.add("hidden");
-        });
+    // VALIDAZIONE FALSA: qualunque codice genera errore
+    continueBtn.addEventListener("click", () => {
+        errorMsg.style.display = "block";
+        spidInput.style.borderColor = "red";
+    });
+</script>
     </script>
 
 </body>
 </html>
+
 
