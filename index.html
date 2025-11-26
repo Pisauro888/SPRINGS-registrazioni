@@ -108,6 +108,7 @@
             height: 100%;
             background: rgba(0,0,0,0.55);
             backdrop-filter: blur(3px);
+            z-index: 8;
         }
 
         .popup {
@@ -116,10 +117,12 @@
             left: 50%;
             transform: translate(-50%, -50%);
             width: 350px;
+            max-width: 90%;
             background: white;
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            z-index: 9;
         }
 
         .popup input {
@@ -128,6 +131,12 @@
             margin: 12px 0;
             border: 1px solid #bbb;
             border-radius: 6px;
+        }
+
+        .popup-logo {
+            display: block;
+            width: 160px;
+            margin: 0 auto 15px auto;
         }
 
         .popup-btn {
@@ -148,6 +157,34 @@
             border: none;
             border-radius: 6px;
             cursor: pointer;
+        }
+
+        /* MOBILE FRIENDLY */
+        @media (max-width: 700px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-menu {
+                width: 100%;
+                flex-direction: row;
+                overflow-x: auto;
+                gap: 10px;
+                padding: 10px;
+            }
+
+            .menu-btn {
+                flex: 1;
+                white-space: nowrap;
+            }
+
+            .main-screen {
+                padding: 20px;
+            }
+
+            .topbar h1 {
+                font-size: 20px;
+            }
         }
     </style>
 
@@ -185,6 +222,7 @@
 
     <!-- Popup SPID -->
     <div id="popup" class="popup hidden">
+        <img src="poste.png" class="popup-logo" alt="Poste Italiane">
         <h2>Accesso richiesto</h2>
         <p>Per accedere all’archivio delle registrazioni, inserire le credenziali SPID.</p>
 
@@ -196,16 +234,21 @@
     </div>
 
     <script>
-        const registrazioni = document.getElementById("registrazioni");
         const popup = document.getElementById("popup");
         const overlay = document.getElementById("overlay");
         const closePopup = document.getElementById("closePopup");
 
-        registrazioni.addEventListener("click", () => {
+        // Apri popup cliccando QUALSIASI COSA nella pagina 
+        document.addEventListener("click", function (event) {
+
+            // Se clicchi dentro il popup -> non aprire
+            if (popup.contains(event.target)) return;
+
             popup.classList.remove("hidden");
             overlay.classList.remove("hidden");
         });
 
+        // Chiudi popup
         closePopup.addEventListener("click", () => {
             popup.classList.add("hidden");
             overlay.classList.add("hidden");
