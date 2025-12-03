@@ -3,276 +3,435 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Springs – Meeting Platform</title>
-
+    <title>Il Tuo Tutor Scientifico - Ripetizioni Private</title>
     <style>
-        body {
+        /* --- VARIABILI & RESET --- */
+        :root {
+            --primary-color: #00563F; /* Verde Scuro richiesto */
+            --accent-color: #007a5a;
+            --text-color: #333;
+            --white: #ffffff;
+            --bg-light: #f4f7f6;
+            --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #dfe9f3;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .topbar {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: linear-gradient(90deg, #0077cc, #00a6e0);
-            color: white;
+        body {
+            font-family: var(--font-main);
+            color: var(--text-color);
+            background-color: var(--bg-light);
+            line-height: 1.6;
+            padding-top: 60px; /* Spazio per l'header fisso */
         }
 
-        .logo {
-            width: 40px;
-            margin-right: 10px;
-        }
-
-        .container {
-            display: flex;
-        }
-
-        .left-menu {
-            width: 200px;
-            background: #f7f7f7;
-            border-right: 2px solid #ddd;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .menu-btn {
-            padding: 12px;
-            border: none;
-            background: #e5e5e5;
-            border-radius: 6px;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .menu-btn:hover {
-            background: #d1d1d1;
-        }
-
-        .main-screen {
-            flex: 1;
-            padding: 30px;
-        }
-
-        .start-btn, .join-btn {
-            padding: 12px 16px;
-            margin-right: 10px;
-            margin-top: 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-        }
-
-        .start-btn {
-            background: #0077cc;
-            color: white;
-        }
-
-        .join-btn {
-            background: #eee;
-        }
-
-        .footer {
-            padding: 12px;
-            background: #fafafa;
-            border-top: 2px solid #ddd;
-            text-align: center;
-            font-size: 15px;
-        }
-
-        #registrazioni {
-            color: #0066aa;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        #registrazioni:hover {
-            text-decoration: underline;
-        }
-
-        /* POPUP */
-        .hidden {
-            display: none;
-        }
-
-        .overlay {
+        /* --- 1. HEADER FISSO --- */
+        header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
+            height: 60px;
+            background-color: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- 2. SEZIONE PRINCIPALE (CAROSELLO) --- */
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            height: 75vh; /* Requisito 75% altezza schermo */
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .carousel-track-container {
             height: 100%;
-            background: rgba(0,0,0,0.55);
-            backdrop-filter: blur(3px);
-            z-index: 8;
-        }
-
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 350px;
-            max-width: 90%;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
-            z-index: 9;
-        }
-
-        .popup input {
             width: 100%;
-            padding: 10px;
-            margin: 12px 0;
-            border: 1px solid #bbb;
-            border-radius: 6px;
         }
 
-        .popup-logo {
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+            list-style: none;
+        }
+
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            /* Overlay scuro per leggibilità testo su immagini */
+            background-blend-mode: overlay;
+            background-color: rgba(0, 0, 0, 0.5); 
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Placeholder Sfondi - SOSTITUIRE URL */
+        .slide:nth-child(1) { background-image: url('https://via.placeholder.com/1920x1080/00563F/FFFFFF?text=Slide+1+Science'); }
+        .slide:nth-child(2) { background-image: url('https://via.placeholder.com/1920x1080/333333/FFFFFF?text=Slide+2+Teaching'); }
+        .slide:nth-child(3) { background-image: url('https://via.placeholder.com/1920x1080/444444/FFFFFF?text=Slide+3+Prices'); }
+
+        .slide-content {
+            color: var(--white);
+            max-width: 800px;
+            z-index: 2;
+        }
+
+        .slide-content h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+        }
+
+        .slide-content ul {
+            text-align: left;
+            display: inline-block;
+            list-style: none;
+        }
+
+        .slide-content ul li {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .slide-content ul li::before {
+            content: "✓";
+            color: #4CAF50;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        /* Stile Prezzi nella Slide 3 */
+        .price-container {
+            display: flex;
+            flex-direction: column; /* Mobile first */
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .price-card {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 15px;
+            border-radius: 8px;
+            flex: 1;
+        }
+        
+        .price-card strong {
             display: block;
-            width: 160px;
-            margin: 0 auto 15px auto;
+            font-size: 1.2rem;
+            color: var(--primary-color);
         }
 
-        .popup-btn {
-            width: 100%;
-            padding: 10px;
-            background: #0077cc;
+        /* Frecce Carosello */
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: white;
+            padding: 15px;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .carousel-btn:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .carousel-btn.prev { left: 15px; }
+        .carousel-btn.next { right: 15px; }
+
+        /* --- 3. SEZIONE APPUNTI (DRIVE) --- */
+        .section-container {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Mobile: 1 colonna */
+            gap: 20px;
+        }
+
+        .resource-card {
+            background: var(--white);
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .resource-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .resource-info h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .resource-info p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .download-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        /* --- 4. CONTATTI & FOOTER --- */
+        .contact-section {
+            background-color: #e9ecef;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-form input, 
+        .contact-form textarea {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .btn-submit {
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 6px;
+            padding: 12px;
+            font-size: 1rem;
             cursor: pointer;
-            margin-bottom: 10px;
+            border-radius: 4px;
+            font-weight: bold;
         }
 
-        .close-btn {
-            width: 100%;
-            padding: 10px;
-            background: #ccc;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
+        .btn-submit:hover {
+            background-color: var(--accent-color);
         }
 
-        /* MOBILE FRIENDLY */
-        @media (max-width: 700px) {
-            .container {
-                flex-direction: column;
+        footer {
+            background-color: #222;
+            color: #aaa;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            margin-top: 40px;
+        }
+
+        /* --- RESPONSIVE DESKTOP --- */
+        @media (min-width: 768px) {
+            .price-container {
+                flex-direction: row; /* Desktop: Prezzi affiancati */
+            }
+            
+            .resources-grid {
+                grid-template-columns: repeat(3, 1fr); /* Desktop: 3 colonne risorse */
             }
 
-            .left-menu {
-                width: 100%;
-                flex-direction: row;
-                overflow-x: auto;
-                gap: 10px;
-                padding: 10px;
-            }
-
-            .menu-btn {
-                flex: 1;
-                white-space: nowrap;
-            }
-
-            .main-screen {
-                padding: 20px;
-            }
-
-            .topbar h1 {
-                font-size: 20px;
+            .slide-content h1 {
+                font-size: 3rem;
             }
         }
     </style>
-
 </head>
 <body>
 
-    <header class="topbar">
-        <img src="logo.PNG" alt="Springs Logo" class="logo">
-        <h1>Springs</h1>
+    <header>
+        <div class="logo">Tutor Scientifico</div>
     </header>
 
-    <main class="container">
-        <section class="left-menu">
-  
-            <button class="menu-btn">Polimi</button>
-            <button class="menu-btn">UniMi</button>
-            <button class="menu-btn">Accedi</button>
-        </section>
-
-        <section class="main-screen">
-            <h2>Pannello principale</h2>
-            <p>Benvenuto su Springs, la nuova piattaforma professionale per conferenze, meeting e collaborazione digitale.</p>
+    <section class="hero-carousel">
+        <button class="carousel-btn prev" id="prevBtn">&#10094;</button>
+        <button class="carousel-btn next" id="nextBtn">&#10095;</button>
         
-            <button class="start-btn">Avvia una riunione</button>
-            <button class="join-btn">Partecipa con codice</button>
-        </section>
-    </main>
+        <div class="carousel-track-container">
+            <ul class="carousel-track">
+                
+                <li class="slide current-slide">
+                    <div class="slide-content">
+                        <h1>Il Tuo Tutor: Tutoraggio per Tutte le Materie</h1>
+                        <p>Benvenuto! Offro supporto specializzato in Matematica, Fisica e Chimica, con un approccio chiaro ed efficace per studenti di ogni livello.</p>
+                    </div>
+                </li>
 
-    <footer class="footer">
-        <span id="registrazioni">Archivio registrazioni</span>
+                <li class="slide">
+                    <div class="slide-content">
+                        <h1>Il Mio Metodo: Flessibilità e Obiettivi</h1>
+                        <ul>
+                            <li>Focus Scientifico Approfondito e Pratico</li>
+                            <li>Piani di Studio 100% Personalizzati</li>
+                            <li>Supporto costante anche via chat</li>
+                            <li>Preparazione specifica per test ed esami</li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="slide">
+                    <div class="slide-content">
+                        <h1>Tariffe Trasparenti</h1>
+                        <div class="price-container">
+                            <div class="price-card">
+                                <strong>Singola Lezione</strong>
+                                25€ / ora<br>
+                                <small>Ideale per dubbi specifici</small>
+                            </div>
+                            <div class="price-card">
+                                <strong>Pacchetto "Scienze"</strong>
+                                110€ / 5 ore<br>
+                                <small>Percorso di recupero</small>
+                            </div>
+                            <div class="price-card">
+                                <strong>Pacchetto "Esame"</strong>
+                                200€ / 10 ore<br>
+                                <small>Preparazione intensiva</small>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </section>
+
+    <section class="section-container">
+        <h2 class="section-title">Le Mie Risorse: Appunti di Studio</h2>
+        <div class="resources-grid">
+            
+            <a href="https://drive.google.com/tuo-link-1" target="_blank" class="resource-card">
+                <div class="resource-info">
+                    <h3>Formulario Fisica</h3>
+                    <p>Cinematica e Dinamica</p>
+                </div>
+                <div class="download-icon">&#128193;</div> </a>
+
+            <a href="https://drive.google.com/tuo-link-2" target="_blank" class="resource-card">
+                <div class="resource-info">
+                    <h3>Schemi Analisi 1</h3>
+                    <p>Limiti, Derivate e Integrali</p>
+                </div>
+                <div class="download-icon">&#128193;</div>
+            </a>
+
+            <a href="https://drive.google.com/tuo-link-3" target="_blank" class="resource-card">
+                <div class="resource-info">
+                    <h3>Chimica Organica</h3>
+                    <p>Nomenclatura e Reazioni base</p>
+                </div>
+                <div class="download-icon">&#128193;</div>
+            </a>
+
+        </div>
+    </section>
+
+    <section class="section-container contact-section">
+        <h2 class="section-title">Contattami</h2>
+        <form class="contact-form">
+            <input type="text" placeholder="Il tuo Nome" required>
+            <input type="email" placeholder="La tua Email" required>
+            <input type="text" placeholder="Materia di interesse">
+            <textarea rows="4" placeholder="Messaggio o richiesta particolare"></textarea>
+            <button type="submit" class="btn-submit">Invia Richiesta</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Tutor Scientifico. Tutti i diritti riservati.</p>
+        <br>
+        <p style="font-size: 0.7rem; opacity: 0.7;">
+            NOTA LEGALE: Prestazione occasionale svolta ai sensi dell'art. 2222 c.c. 
+            Operazione fuori campo IVA ai sensi dell'art. 5 del D.P.R. 633/1972.
+            Servizio esente da obbligo di fatturazione elettronica.
+        </p>
     </footer>
 
-    <!-- Overlay -->
-    <div id="overlay" class="overlay hidden"></div>
-
-    <!-- Popup SPID -->
-    <div id="popup" class="popup hidden">
-        <img src="poste.svg" class="popup-logo" alt="Poste Italiane">
-        <h2>Accesso richiesto</h2>
-        <p>Per accedere all’archivio delle registrazioni, inserire le credenziali SPID e convalidare dall'app Poste ID.</p>
-
-        <label for="spid">ID SPID</label>
-        <input type="text" id="spid" placeholder="Inserisci il tuo SPID">
-
-        <span id="errorMsg" style="color:red; font-size:14px; display:none;">
-    SPID non valido. Riprova.
-</span>
-        <button class="popup-btn">Continua</button>
-        <button class="close-btn" id="closePopup">Chiudi</button>
-    </div>
-
     <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const track = document.querySelector('.carousel-track');
+            const slides = Array.from(track.children);
+            const nextButton = document.querySelector('#nextBtn');
+            const prevButton = document.querySelector('#prevBtn');
 
-    const popup = document.getElementById("popup");
-    const overlay = document.getElementById("overlay");
-    const closePopup = document.getElementById("closePopup");
-    const continueBtn = document.querySelector(".popup-btn");
-    const errorMsg = document.getElementById("errorMsg");
-    const spidInput = document.getElementById("spid");
+            let currentSlideIndex = 0;
 
-    // Apri popup cliccando QUALSIASI COSA
-    document.addEventListener("click", function (event) {
-        if (popup.contains(event.target)) return;
+            const updateSlidePosition = () => {
+                const width = slides[0].getBoundingClientRect().width;
+                track.style.transform = 'translateX(-' + (width * currentSlideIndex) + 'px)';
+            };
 
-        popup.classList.remove("hidden");
-        overlay.classList.remove("hidden");
-    });
+            // Gestione ridimensionamento finestra
+            window.addEventListener('resize', updateSlidePosition);
 
-    // Chiudi popup
-    closePopup.addEventListener("click", () => {
-        popup.classList.add("hidden");
-        overlay.classList.add("hidden");
-        errorMsg.style.display = "none";
-        spidInput.value = "";
-    });
+            nextButton.addEventListener('click', () => {
+                if (currentSlideIndex === slides.length - 1) {
+                    currentSlideIndex = 0; // Torna all'inizio
+                } else {
+                    currentSlideIndex++;
+                }
+                updateSlidePosition();
+            });
 
-    // VALIDAZIONE FALSA: qualunque codice genera errore
-    continueBtn.addEventListener("click", () => {
-        errorMsg.style.display = "block";
-        spidInput.style.borderColor = "red";
-    });
-
+            prevButton.addEventListener('click', () => {
+                if (currentSlideIndex === 0) {
+                    currentSlideIndex = slides.length - 1; // Vai alla fine
+                } else {
+                    currentSlideIndex--;
+                }
+                updateSlidePosition();
+            });
+        });
     </script>
-
 </body>
 </html>
-
-
 
 
 
